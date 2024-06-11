@@ -1,12 +1,12 @@
 import express, {json} from 'express';
 import cors from "cors";
-import multer from "multer";
+// import multer from "multer";
 import userRoutes from './routes/user.routes';
 
 const app = express();
-const upload = multer();
+// const upload = multer();
 
-app.use(upload.array());
+// app.use(upload.array());
 app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
