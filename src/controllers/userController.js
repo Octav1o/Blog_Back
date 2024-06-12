@@ -27,14 +27,14 @@ export const registerUser = async (req, res) => {
       status,
     };
 
-    const params = [
-      user.name,
-      user.lastname,
-      user.mail,
-      user.password,
-      user.pfp,
-      user.status,
-    ];
+    const params = {
+      name: user.name,
+      lastname: user.lastname,
+      mail: user.mail,
+      password: user.password,
+      pfp: user.pfp,
+      status: user.status,
+    };
     const result = await executeQuery(queries.insertUser, params);
 
     const payload = {

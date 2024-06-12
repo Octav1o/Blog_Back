@@ -2,8 +2,8 @@ import { config } from 'dotenv'
 config();
 
 export default {
-    dbUser: process.env.DB_USER || '',
-    dbPassword: process.env.DB_PASSWORD || '',
-    dbServer: process.env.DB_SERVER || '',
-    dbDatabase: process.env.DB_NAME || ''
+    dbUser: process.env.DB_USER || 'sa',
+    dbPassword: process.env.DB_PASSWORD || 'R0ckt@v10',
+    dbServer: process.env.DB_SERVER || 'localhost',
+    dbDatabase: process.env.DB_NAME || 'blog'
 }
