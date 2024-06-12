@@ -1,11 +1,11 @@
 import { verify } from 'jsonwebtoken';
 
-export const  authenticateToken = (request, response, next) =>{
-    const authHeader = request.headers['authorization'];
+export const  authenticateToken = (req, res, next) =>{
+    const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 
     if (token == null) {
-        return response.sendStatus(401);
+        return res.sendStatus(401);
     }
 
     verify(token, process.env.TOKEN, (err, user) => {
