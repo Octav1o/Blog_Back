@@ -9,14 +9,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
-// const jsonParser = bodyParser.json();
-
-// const urlencodedParser = bodyParser.urlencoded( { extended: false } );
-
-// app.use(express.json());
-
-// app.use(jsonParser);
-// app.use(urlencodedParser);
 
 const upload = multer();
 
