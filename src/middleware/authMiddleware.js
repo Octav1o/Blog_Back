@@ -13,7 +13,7 @@ export const  authenticateToken = (req, res, next) =>{
             return response.sendStatus(403)
         }
 
-        request.user = user;
+        req.user = user;
         next();
     });
 }

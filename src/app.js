@@ -1,39 +1,52 @@
-import express, {json} from 'express';
+import express from 'express';
 import cors from "cors";
 import userRoutes from './routes/user.routes';
-import multer from "multer";
-import bodyParser from 'body-parser'
+import postsRoutes from './routes/post.routes';
 import { authenticateToken } from './middleware/authMiddleware';
 import dotenv from 'dotenv';
+import fileUpload from 'express-fileupload';
+import path from 'path';
 
 dotenv.config();
 
 const app = express();
-
-const upload = multer();
-
-app.use(cors({ origin: "*"}));
-
-app.use(upload.fields([{ name: 'pfp', maxCount: 1}]));
-app.use(express.json());
-
 const PORT = process.env.PORT || 3000;
 
+// Middleware
+app.use(cors({ origin: "*" }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Configurar express-fileupload
+app.use(fileUpload({
+  createParentPath: true,
+  limits: {
+    fileSize: 5 * 1024 * 1024, 
+  },
+}));
+
+// Middleware para verificar el token en rutas protegidas
 const publicRoutes = [
-    '/api/user/login',
-    '/api/user/registerUser',
+  '/api/user/login',
+  '/api/user/registerUser',
+  'api/post/getPosts'
 ];
 
-
-app.use(( req, res, next ) => {
-    if(publicRoutes.includes(req.path)) {
-        return next();
-    };
-    authenticateToken(req, res, next);
+app.use((req, res, next) => {
+  if (publicRoutes.includes(req.path)) {
+    return next();
+  }
+  authenticateToken(req, res, next);
 });
 
-
-app.listen(PORT, () => console.log(`App listening on port ${PORT}`));
+// Rutas para usuarios y posts
 app.use(userRoutes);
+app.use(postsRoutes);
+
+// Middleware para servir archivos estáticos (fotos)
+app.use('/photos', express.static(path.join(__dirname, 'photos')));
+
+// Escuchar en el puerto definido
+app.listen(PORT, () => console.log(`App listening on port ${PORT}`));
 
 export default app;
