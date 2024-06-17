@@ -108,7 +108,7 @@ export const login = async (req, res) => {
       res.cookie("session", "secure-session-token", {
         httpOnly: true,
         secure: true,
-        sameSite: "strict",
+        // sameSite: "strict",
       });
 
       console.log(`User ${mail} logged in successfully`);

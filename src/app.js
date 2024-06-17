@@ -25,14 +25,17 @@ app.use(fileUpload({
   },
 }));
 
+app.use('/photos', express.static(path.join(__dirname, './photos')));
 // Middleware para verificar el token en rutas protegidas
 const publicRoutes = [
   '/api/user/login',
   '/api/user/registerUser',
-  'api/post/getPosts'
+  '/api/post/getPosts',
+  // '/api/post/getUserPosts',
 ];
 
 app.use((req, res, next) => {
+  console.log(req.path);
   if (publicRoutes.includes(req.path)) {
     return next();
   }
@@ -44,7 +47,6 @@ app.use(userRoutes);
 app.use(postsRoutes);
 
 // Middleware para servir archivos estáticos (fotos)
-app.use('/photos', express.static(path.join(__dirname, 'photos')));
 
 // Escuchar en el puerto definido
 app.listen(PORT, () => console.log(`App listening on port ${PORT}`));

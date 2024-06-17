@@ -10,7 +10,7 @@ export const  authenticateToken = (req, res, next) =>{
 
     verify(token, process.env.TOKEN, (err, user) => {
         if (err) {
-            return response.sendStatus(403)
+            return res.sendStatus(403)
         }
 
         req.user = user;

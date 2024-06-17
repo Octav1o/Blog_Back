@@ -15,6 +15,7 @@ export const queries = {
     deletePost: "DELETE FROM Posts WHERE id = @id",
     getPost: "SELECT * FROM Posts WHERE id = @id",
     getPosts: "SELECT * FROM Posts", //este no requiere token
+    getUserPosts: "SELECT * FROM Posts INNER JOIN UserPosts ON posts.id = userPosts.idPost WHERE UserPosts.idUser = @idUser",
 
     //querys tabla UsuarioPost
     insertUserPost: "INSERT INTO UserPosts (idUser, idPost) VALUES (@idUser, @idPost)",

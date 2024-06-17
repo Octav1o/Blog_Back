@@ -12,7 +12,13 @@ export const executeQuery = async (query, params) => {
         // Convierte 'pfp' a un Buffer antes de pasarlo a la consulta
         request.input(key, sql.VarBinary(sql.MAX), Buffer.from(params[key].buffer));
       } else if (key === "picture" && params[key] !== null) {
-        request.input(key, sql.VarBinary(sql.MAX), Buffer.from(params[key].buffer));
+        // Si 'picture' es un objeto con una propiedad 'buffer', conviértelo a un Buffer
+        // De lo contrario, asume que es un string y pásalo tal cual
+        if (params[key].buffer) {
+          request.input(key, sql.VarBinary(sql.MAX), Buffer.from(params[key].buffer));
+        } else {
+          request.input(key, params[key]);
+        }
       } else {
         // Agrega el parámetro como está si no es 'pfp' ni 'picture'
         request.input(key, params[key]);
@@ -26,5 +32,6 @@ export const executeQuery = async (query, params) => {
     throw error;
   }
 };
+
 
 export { queries } from "./querys";
